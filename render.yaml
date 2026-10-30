@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: taskflow-api
+    runtime: node
+    plan: starter
+    buildCommand: npm ci --omit=dev
+    startCommand: npm run start:backend
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /var/data
+      - key: CORS_ORIGIN
+        sync: false
+    disk:
+      name: taskflow-sqlite
+      mountPath: /var/data
+      sizeGB: 1
